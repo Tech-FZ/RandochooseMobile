@@ -1,0 +1,152 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <XamarinSdkTargetsImported>true</XamarinSdkTargetsImported>
+    </PropertyGroup>
+
+    <UsingTask TaskName="Xamarin.Common.Tasks.XamarinTelemetry" AssemblyFile="Xamarin.Common.Tasks.dll" />
+
+    <PropertyGroup>
+        <_WriteTelemetryPropertiesLoggingImportance Condition="'$(_WriteTelemetryPropertiesLoggingImportance)' == ''">low</_WriteTelemetryPropertiesLoggingImportance>
+        <_IsIncrementalBuildFile>$(IntermediateOutputPath)\_IsIncrementalBuild</_IsIncrementalBuildFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PrepareForRunDependsOn>
+            _WriteTelemetryProperties;
+            $(PrepareForRunDependsOn)
+        </PrepareForRunDependsOn>
+    </PropertyGroup>
+
+    <Target Name="_CleanIsIncrementalFile" AfterTargets="Clean" Condition="Exists('$(_IsIncrementalBuildFile)')">
+        <Delete Files="$(_IsIncrementalBuildFile)" />
+    </Target>
+
+    <Target Name="_CollectAndroidTelemetryProperties"
+            Condition="'$(TargetPlatformIdentifier)' == 'Android' or '$(TargetFrameworkIdentifier)' == 'MonoAndroid'"
+            >
+        <PropertyGroup>
+            <_UseFastDeployment Condition="'$(_UseFastDeployment)' == ''" >false</_UseFastDeployment>
+            <_UseFastDeployment Condition="'$(_UseFastDeployment)' == '' and '$(EmbedAssembliesIntoApk)' == 'false'">true</_UseFastDeployment>
+        </PropertyGroup>
+        <ItemGroup>
+            <_TelemetryReport Include="
+                                                    AndroidUseAapt2=$(_AndroidUseAapt2);
+                                                    UseSharedRuntime=$(AndroidUseSharedRuntime);
+                                                    UseFastDeployment=$(_UseFastDeployment);
+                                                    EnableMultidex=$(AndroidEnableMultiDex);
+                                                    EnableProGuard=$(AndroidEnableProGuard);
+                                                    GenerateOnePackagePerABI=$(AndroidCreatePackagePerAbi);
+                                                    BundleAssemblies=$(BundleAssemblies);
+                                                    EnableDeveloperInstrumentation=$(DebugSymbols);
+                                                    Debugger=$(Debugger);
+                                                    EnableAOT=$(AotAssemblies);
+                                                    UseConcurrentGC=$(AndroidEnableSGenConcurrent);
+                                                    AdditionalSupportedEncodings=$(MandroidI18n.Replace(';', '|'));
+                                                    SupportedArchitectures=$(AndroidSupportedAbis.Replace(';', '|'));
+                                                    JavaMaxHeapSize=$(JavaMaximumHeapSize);
+                                                    HttpClientImplementation=$(AndroidHttpClientHandlerType);
+                                                    TLSImplementation=$(AndroidTlsProvider);
+                                                    FastDeploymentType=$(AndroidFastDeploymentType);
+                                                    ClassParser=$(AndroidClassParser);
+                                                    CodegenTarget=$(AndroidCodegenTarget);
+                                                    AndroidDexTool=$(AndroidDexTool);
+                                                    AndroidLinkTool=$(AndroidLinkTool);
+                                                    AndroidEnableProfiledAot=$(AndroidEnableProfiledAot);
+                                                    AndroidInstallAfterBuild=$(AndroidInstallAfterBuild);
+                                                    AndroidSessionId=$(AndroidSessionId);
+                                                    " />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_CollectIOSTelemetryProperties"
+            Condition="'$(TargetPlatformIdentifier)' == 'iOS' or $(TargetFrameworkIdentifier.StartsWith('Xamarin.'))"
+            >
+        <ItemGroup>
+            <_TelemetryReport Include="
+                                                    IsLocal=$(IsHotRestartBuild);
+                                                    EnableLLVM=$(MtouchUseLlvm);
+                                                    UseConcurrentGC=$(MtouchEnableSGenConc);
+                                                    LinkerBehavior=$(MtouchLink);
+                                                    AdditionalSupportedEncodings=$(MtouchI18n.Replace(';', '|'));
+                                                    HttpClientImplementation=$(MtouchHttpClientHandler);
+                                                    SupportedArchitectures=$(MtouchArch.Replace(';', '|'));
+                                                    TargetiOSDevice=$(TargetiOSDevice);
+                                                    " />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_WriteTelemetryProperties"
+            DependsOnTargets="_CollectAndroidTelemetryProperties;_CollectIOSTelemetryProperties"
+            AfterTargets="Build"
+            Condition="'$(_WriteTelemetryProperties)' != 'false'">
+
+        <PropertyGroup>
+            <IsIncrementalBuild Condition="Exists('$(_IsIncrementalBuildFile)')">true</IsIncrementalBuild>
+            <IsIncrementalBuild Condition="!Exists('$(_IsIncrementalBuildFile)')">false</IsIncrementalBuild>
+            <UseMaui Condition="'$(UseMaui)' == ''">false</UseMaui>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <_ProjectCapabilities>;@(ProjectCapability->'%(Identity)');</_ProjectCapabilities>
+            <_MauiCapability>$(_ProjectCapabilities.Contains(';Maui;'))</_MauiCapability>
+            <_MauiSingleProjectCapability>$(_ProjectCapabilities.Contains(';MauiSingleProject;'))</_MauiSingleProjectCapability>
+            <_MobileCapability>$(_ProjectCapabilities.Contains(';Mobile;'))</_MobileCapability>
+            <_MsixCapability>$(_ProjectCapabilities.Contains(';Msix;'))</_MsixCapability>
+            <_WinUICapability>$(_ProjectCapabilities.Contains(';WinUI;'))</_WinUICapability>
+            <_XamarinFormsCapability>$(_ProjectCapabilities.Contains(';XamarinForms;'))</_XamarinFormsCapability>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <_TelemetryReport Include="IsIncrementalBuild=$(IsIncrementalBuild);
+                                       BuildingInsideVisualStudio=$(BuildingInsideVisualStudio);
+                                       BuildConfiguration=$(Configuration);
+                                       BuildPlatform=$(Platform);
+                                       TemplateName=$(TemplateGuid);
+                                       Maui=$(_MauiCapability);
+                                       MauiSingleProject=$(_MauiSingleProjectCapability);
+                                       Mobile=$(_MobileCapability);
+                                       Msix=$(_MsixCapability);
+                                       WinUI=$(_WinUICapability);
+                                       XamarinForms=$(_XamarinFormsCapability);
+                                       OutputType=$(OutputType);
+                                       TemplateGuid=$(TemplateGuid);
+                                       TargetFrameworks=$(TargetFrameworks.Replace(';', '|'));
+                                       TargetFramework=$(TargetFramework);
+                                       TargetFrameworkIdentifier=$(TargetFrameworkIdentifier);
+                                       TargetFrameworkMoniker=$(TargetFrameworkMoniker);
+                                       TargetFrameworkVersion=$(TargetFrameworkVersion);
+                                       TargetFrameworkMinVersion=$(TargetFrameworkMinVersion);
+                                       TargetPlatformDisplayName=$(TargetPlatformDisplayName);
+                                       TargetPlatformIdentifier=$(TargetPlatformIdentifier);
+                                       TargetPlatformMoniker=$(TargetPlatformMoniker);
+                                       TargetPlatformVersion=$(TargetPlatformVersion);
+                                       IsImplicitlyTriggeredBuild=$(IsImplicitlyTriggeredBuild);
+                                       " />
+        </ItemGroup>
+
+        <WriteLinesToFile Lines="$(_IsIncrementalBuildFile)" File="$(_IsIncrementalBuildFile)" Condition="!Exists('$(_IsIncrementalBuildFile)')" ContinueOnError="true" />
+
+        <Message Importance="$(_WriteTelemetryPropertiesLoggingImportance)"
+                 Text=" [$(ProjectName) $(TargetFramework)/$(TargetPlatformIdentifier)] Capability: %(ProjectCapability.Identity)"
+                 />
+
+        <Message Importance="$(_WriteTelemetryPropertiesLoggingImportance)"
+                 Text=" [$(ProjectName) $(TargetFramework)/$(TargetPlatformIdentifier)] %(_TelemetryReport.Identity)"
+                 />
+
+        <XamarinTelemetry Condition="$(_MobileCapability) 
+                                  or $(_MauiCapability) 
+                                  or $(_XamarinFormsCapability) 
+                                  or $(TargetFrameworkIdentifier.StartsWith('Xamarin.'))
+                                  or '$(TargetFrameworkIdentifier)' == 'MonoAndroid'"
+                          />
+    </Target>
+
+    <PropertyGroup>
+        <DeferredBuildSupported Condition="'$(DeferredBuildSupported)' == ''">false</DeferredBuildSupported>
+    </PropertyGroup>
+
+    <Target Name="DeferredBuild" DependsOnTargets="$(DeferredBuildDependsOn)" Condition="'$(DeferredBuild)' == 'true'" />
+
+</Project>

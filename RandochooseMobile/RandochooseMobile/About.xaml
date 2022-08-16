@@ -4,7 +4,7 @@
              x:Class="RandochooseMobile.About">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="About Randochoose 0.2.1"
+            <Label Text="About Randochoose 0.2.2"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 

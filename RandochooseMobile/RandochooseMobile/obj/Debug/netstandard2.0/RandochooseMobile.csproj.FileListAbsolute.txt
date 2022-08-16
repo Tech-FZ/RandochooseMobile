@@ -1,0 +1,16 @@
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\bin\Debug\netstandard2.0\Randochoose Mobile.deps.json
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\bin\Debug\netstandard2.0\Randochoose Mobile.dll
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\bin\Debug\netstandard2.0\Randochoose Mobile.pdb
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\RandochooseMobile.csproj.AssemblyReference.cache
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\RandochooseMobile.GeneratedMSBuildEditorConfig.editorconfig
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\About.xaml.g.cs
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\RandochooseMobile.AssemblyInfoInputs.cache
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\RandochooseMobile.AssemblyInfo.cs
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\RandochooseMobile.csproj.CoreCompileInputs.cache
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\XamlC.stamp
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\Randochoose Mobile.dll
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\refint\Randochoose Mobile.dll
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\Randochoose Mobile.pdb
+D:\Eigene Dateien\Nicos Code\RandochooseMobile\RandochooseMobile\RandochooseMobile\obj\Debug\netstandard2.0\ref\Randochoose Mobile.dll
