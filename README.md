@@ -2,6 +2,12 @@
 
 This is basically Randochoose but for Android.
 
+## Mirrors of Randochoose Mobile
+
+GitHub: https://github.com/Tech-FZ/RandochooseMobile
+
+Codeberg: https://codeberg.org/lucien-rowan/RandochooseMobile
+
 ## We're Using GitHub Under Protest
 
 This project is currently hosted on GitHub.  This is not ideal; GitHub is a
