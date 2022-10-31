@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RandochooseMobile.GroupRandomizer">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="One line is one candidtate."></Label>
+
+            <Label Text="I currently recommend you to type in all candidates twice"></Label>
+
+            <Editor x:Name="items" HeightRequest="100"></Editor>
+
+            <Label x:Name="lblForGroupNum" Text="Maximum items in a group: 2"></Label>
+
+            <Slider x:Name="groupNum" Maximum="8" Minimum="2" ValueChanged="groupNum_ValueChanged"></Slider>
+
+            <Button Text="Choose!" Clicked="Handle_Clicked"></Button>
+            <Label x:Name="chosenItem" Text="Here will be the groups."></Label>
+
+            <Editor x:Name="itemGroups" IsReadOnly="True" HeightRequest="100"></Editor>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

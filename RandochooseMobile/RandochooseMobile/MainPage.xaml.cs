@@ -24,5 +24,10 @@ namespace RandochooseMobile
         {
             await Navigation.PushAsync(new About());
         }
+
+        private async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new GroupRandomizer());
+        }
     }
 }
